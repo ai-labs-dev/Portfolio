@@ -1,89 +1,415 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Labs — AI Tools & Projects</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Snehil Sahay — AI Developer</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0d1117;
-            color: #e6edf3;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-        header {
-            padding: 30px;
-            text-align: center;
-            background: #161b22;
-            border-bottom: 1px solid #30363d;
-        }
+  <style>
+    :root{
+      --bg-1: #f8fbff;
+      --bg-2: #eef6ff;
+      --glass: rgba(255,255,255,0.6);
+      --card: rgba(255,255,255,0.85);
+      --text: #0b1220;
+      --muted: #4b5563;
+      --accent: #2aa6ff;
+      --accent-2: #8a2be2;
+      --shadow: rgba(16,24,40,0.08);
+      --glass-border: rgba(255,255,255,0.7);
+    }
 
-        h1 { margin: 0; }
-        p { opacity: 0.8; }
+    .dark{
+      --bg-1: #071028;
+      --bg-2: #08111b;
+      --glass: rgba(14,23,32,0.45);
+      --card: rgba(10,18,28,0.6);
+      --text: #e6eef8;
+      --muted: #9aa4b2;
+      --accent: #3dd7ff;
+      --accent-2: #c285ff;
+      --shadow: rgba(0,0,0,0.6);
+      --glass-border: rgba(255,255,255,0.03);
+    }
 
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 40px auto;
-        }
+    html,body{height:100%;margin:0;font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% 20%, var(--bg-1), transparent 20%),
+                  radial-gradient(1000px 500px at 90% 80%, var(--bg-2), transparent 18%),
+                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      transition: background 400ms ease, color 300ms ease;
+      overflow-x:hidden;
+    }
 
-        .project {
-            background: #161b22;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px solid #30363d;
-        }
+    /* Particle canvas full-screen */
+    #particles {
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+    }
 
-        .project a {
-            color: #58a6ff;
-            text-decoration: none;
-        }
+    header{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:64px 20px 20px 20px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-            opacity: 0.5;
-            font-size: 14px;
-        }
-    </style>
+    .brand {
+      display:inline-flex;
+      align-items:center;
+      gap:14px;
+      justify-content:center;
+    }
+
+    .logo-3d{
+      width:64px;height:64px;
+      display:inline-grid;
+      place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow: 0 8px 28px rgba(42,166,255,0.15), inset 0 -6px 18px rgba(0,0,0,0.08);
+      transform: perspective(600px) rotateX(10deg) rotateY(-10deg);
+    }
+    .logo-3d svg{width:38px;height:38px;filter:drop-shadow(0 6px 14px rgba(42,166,255,0.12));}
+
+    h1{font-size:40px;margin:8px 0 4px 0;letter-spacing:-0.8px;}
+    .subtitle{opacity:.8;margin:0;color:var(--muted);font-size:15px;}
+
+    .container{max-width:1100px;margin:34px auto;padding:20px;position:relative;z-index:2;}
+
+    .grid{
+      display:grid;grid-template-columns: 1fr 420px;gap:28px;
+    }
+    @media (max-width:900px){.grid{grid-template-columns:1fr;padding:0;}}
+
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+      border-radius:16px;padding:28px;border:1px solid var(--glass-border);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    .dark .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    }
+
+    .about h2{margin:0 0 10px 0;font-size:18px;}
+    .about p{margin:8px 0;color:var(--muted);line-height:1.6;}
+
+    /* Skill badges */
+    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+    .skill{background:linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));padding:8px 12px;border-radius:999px;font-weight:600;color:var(--text);font-size:13px;border:1px solid rgba(255,255,255,0.06);}
+
+    .projects-section{margin-top:20px;}
+    .cards{display:grid;gap:18px;}
+    .card{
+      display:flex;gap:12px;align-items:flex-start;
+      padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--glass-border);
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(2,6,23,0.12);}
+    .card .icon{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:white;flex:0 0 64px;transform:translateZ(0);}
+    .card h3{margin:2px 0 6px 0;}
+    .card p{margin:0;color:var(--muted);font-size:14px;line-height:1.45;}
+
+    .links{margin-top:10px}
+    .links a{color:var(--accent);text-decoration:none;margin-right:12px;font-weight:600}
+    .links a:hover{text-decoration:underline}
+
+    /* Floating hire button */
+    .hire-btn{
+      position:fixed;right:24px;bottom:28px;z-index:4;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:white;padding:14px 18px;border-radius:999px;font-weight:700;border:none;cursor:pointer;
+      box-shadow:0 12px 30px rgba(0,0,0,0.2);
+      display:flex;gap:10px;align-items:center;backdrop-filter:blur(8px);
+    }
+    .hire-btn .dot{width:10px;height:10px;background:white;border-radius:50%;box-shadow:0 4px 10px rgba(0,0,0,0.18);}
+
+    /* Toggle switch */
+    .top-actions{position:absolute;right:20px;top:18px;display:flex;gap:12px;align-items:center;z-index:5}
+    .toggle{
+      display:inline-flex;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+      border-radius:999px;padding:6px;border:1px solid var(--glass-border);
+    }
+    .toggle button{background:none;border:none;color:var(--text);padding:6px 10px;cursor:pointer;font-weight:600;opacity:.9}
+    .toggle button.active{background:rgba(255,255,255,0.12);border-radius:999px}
+
+    /* Modal */
+    .modal-bg{position:fixed;inset:0;background:rgba(5,8,12,0.6);display:none;align-items:center;justify-content:center;z-index:6}
+    .modal{background:var(--card);padding:22px;border-radius:12px;max-width:520px;border:1px solid var(--glass-border);}
+    .modal h3{margin:0 0 8px 0}
+    .modal p{color:var(--muted)}
+
+    footer{opacity:.7;text-align:center;padding:30px 20px;margin-top:40px;color:var(--muted)}
+
+    /* little 3D visual for icons */
+    .ai-svg{filter:drop-shadow(0 10px 24px rgba(0,0,0,0.12))}
+  </style>
 </head>
-
 <body>
-    <header>
-        <h1>AI Labs</h1>
-        <p>AI Tools • RAG Apps • Streamlit • Generative AI</p>
-    </header>
+  <canvas id="particles"></canvas>
 
-    <div class="container">
+  <div class="top-actions" role="toolbar" aria-label="Theme and actions">
+    <div class="toggle" id="themeToggle" title="Toggle light / dark">
+      <button id="lightBtn">Light</button>
+      <button id="darkBtn">Dark</button>
+    </div>
+  </div>
 
-        <h2>🚀 Projects</h2>
+  <header>
+    <div class="brand">
+      <div class="logo-3d" aria-hidden="true">
+        <!-- 3D-ish AI icon (SVG) -->
+        <svg viewBox="0 0 24 24" class="ai-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3v2" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 19v2" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.6 7.6l1.4 1.4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18 14.9l1.4 1.4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3.2" stroke="white" stroke-width="1.6"/>
+        </svg>
+      </div>
 
-        <div class="project">
-            <h3>📄 PDF Summarizer + RAG</h3>
-            <p>A Streamlit + Groq powered app that summarizes PDFs and answers questions using embeddings.</p>
-            <a href="https://pdf-summarizer-rag.streamlit.app/" target="_blank">Live Demo</a> |
-            <a href="https://github.com/ai-labs-dev/pdf-summarizer-rag" target="_blank">GitHub Repo</a>
+      <div style="text-align:left;">
+        <h1>Snehil Sahay</h1>
+        <div class="subtitle">AI & Generative AI Developer</div>
+        <div class="subtag" style="color:var(--muted);margin-top:6px;font-size:14px">First-year student — VIT Bhopal University</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <section class="glass about">
+        <h2>About</h2>
+        <p>I build efficient AI tools and production-ready prototypes focused on document intelligence, RAG pipelines, and interactive chatbots. My work emphasizes simplicity, reliability, and delivering measurable value for clients.</p>
+
+        <div style="display:flex;gap:16px;margin-top:14px;">
+          <div style="flex:1">
+            <div style="font-weight:700;margin-bottom:8px">Motive</div>
+            <p style="margin:0;color:var(--muted)">Empower people and businesses with compact AI tools that automate knowledge work and make information instantly available.</p>
+          </div>
+          <div style="width:180px">
+            <div style="font-weight:700;margin-bottom:8px">Availability</div>
+            <p style="margin:0;color:var(--muted)">Freelance • Remote • Flexible</p>
+          </div>
         </div>
 
-        <div class="project">
-            <h3>🤖 AI Chatbot (Llama 3.1 + Groq)</h3>
-            <p>A clean and fast ChatGPT-style assistant built using Streamlit and Groq API.</p>
-            <a href="https://ai-chatbot-groq-ex4pwqvsdx8vvgg4giaah7.streamlit.app/" target="_blank">Live Demo</a> |
-            <a href="https://github.com/ai-labs-dev/ai-chatbot-groq" target="_blank">GitHub Repo</a>
+        <div class="skills" aria-hidden="true" style="margin-top:16px">
+          <div class="skill">Python</div>
+          <div class="skill">Generative AI</div>
+          <div class="skill">RAG & Retrieval</div>
+          <div class="skill">Streamlit</div>
+          <div class="skill">Embeddings</div>
+          <div class="skill">Deployment</div>
         </div>
 
-        <h2>📞 Contact</h2>
-        <p>Email: snehilsahay24@gmail.com</p>
+        <div style="margin-top:16px">
+          <a class="links" href="mailto:contact.ailabs@gmail.com" title="Contact me">Contact →</a>
+          <a class="links" href="https://github.com/ai-labs-dev/pdf-summarizer-rag" target="_blank" rel="noopener">Project (PDF RAG)</a>
+        </div>
+      </section>
+
+      <aside>
+        <div class="glass" style="margin-bottom:18px;">
+          <h3 style="margin-top:0">Quick Facts</h3>
+          <p style="color:var(--muted);margin-bottom:12px">Freelance packages, demo links, and example deliverables available on request.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <div style="padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));font-weight:700">Starter: ₹799</div>
+            <div style="padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));font-weight:700">Pro: ₹2499</div>
+          </div>
+        </div>
+
+        <div class="glass">
+          <h3 style="margin-top:0">Experience</h3>
+          <p style="color:var(--muted)">Hands-on with RAG pipelines, Streamlit deployments, and client demos. Comfortable delivering working MVPs within days.</p>
+        </div>
+      </aside>
     </div>
 
-    <footer>
-        © 2025 AI Labs
-    </footer>
+    <section class="projects-section" style="margin-top:28px">
+      <h2 style="margin-bottom:12px" class="section-title">Projects</h2>
 
+      <div class="cards">
+        <article class="card">
+          <div class="icon" aria-hidden="true" style="flex:0 0 64px;">
+            <div style="width:64px;height:64px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));">
+              <!-- small AI cube SVG -->
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" class="ai-svg" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8.5L12 3l9 5.5v6L12 21 3 14.5v-6z" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M12 3v18" stroke="white" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>PDF Summarizer + RAG</h3>
+            <p>Summarizes long documents and answers user queries using embeddings + Groq LLM. Deployed as a Streamlit web-app.</p>
+            <div class="links"><a href="https://pdf-summarizer-rag.streamlit.app/" target="_blank">Live demo</a><a href="https://github.com/ai-labs-dev/pdf-summarizer-rag" target="_blank">GitHub</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon" style="flex:0 0 64px;">
+            <div style="width:64px;height:64px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#ffd166,#ff7b7b);">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" class="ai-svg" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2v7" stroke="white" stroke-width="1.1" stroke-linecap="round"></path>
+                <path d="M5 11c1.5-4 5-7 7-9c2 2 5.5 5 7 9" stroke="white" stroke-width="1.1" stroke-linecap="round"></path>
+                <path d="M12 22v-4" stroke="white" stroke-width="1.1" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>AI Chatbot</h3>
+            <p>Multi-turn assistant built with Llama 3.1 via Groq API. Designed for fast inference and professional UI.</p>
+            <div class="links"><a href="https://ai-chatbot-groq-ex4pwqvsdx8vvgg4giaah7.streamlit.app/">Live demo</a><a href="https://github.com/ai-labs-dev/ai-chatbot-groq" target="_blank">GitHub</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <button class="hire-btn" id="hireBtn" aria-label="Hire me">
+    <span class="dot" aria-hidden="true"></span>
+    Hire Me
+  </button>
+
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3>Hire Me — Quick Contact</h3>
+      <p>Send an email to discuss your project requirements and timeline. I usually respond within 24 hours.</p>
+      <p style="margin-top:12px"><strong>Email:</strong> <a href="mailto:snehilsahay24@gmail.com">snehilsahay24@gmail.com</a></p>
+      <div style="margin-top:14px;text-align:right">
+        <button id="closeModal" style="padding:8px 12px;border-radius:8px;border:none;background:transparent;color:var(--accent);font-weight:700;cursor:pointer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Snehil Sahay — AI Developer • Freelance & Student
+  </footer>
+
+<script>
+  // Theme toggle logic with localStorage
+  (function(){
+    const root = document.documentElement;
+    const body = document.body;
+    const lightBtn = document.getElementById('lightBtn');
+    const darkBtn = document.getElementById('darkBtn');
+
+    function applyTheme(theme){
+      if(theme === 'dark'){
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('site-theme','dark');
+        darkBtn.classList.add('active'); lightBtn.classList.remove('active');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('site-theme','light');
+        lightBtn.classList.add('active'); darkBtn.classList.remove('active');
+      }
+    }
+
+    // load saved
+    const saved = localStorage.getItem('site-theme') || 'light';
+    applyTheme(saved);
+
+    lightBtn.onclick = ()=>applyTheme('light');
+    darkBtn.onclick = ()=>applyTheme('dark');
+  })();
+
+  // Modal and hire button
+  const hireBtn = document.getElementById('hireBtn');
+  const modalBg = document.getElementById('modalBg');
+  const closeModal = document.getElementById('closeModal');
+
+  hireBtn.addEventListener('click', ()=>{
+    modalBg.style.display = 'flex';
+    modalBg.setAttribute('aria-hidden','false');
+  });
+  closeModal.addEventListener('click', ()=>{
+    modalBg.style.display = 'none';
+    modalBg.setAttribute('aria-hidden','true');
+  });
+  modalBg.addEventListener('click', (e)=>{
+    if(e.target === modalBg){
+      modalBg.style.display = 'none';
+      modalBg.setAttribute('aria-hidden','true');
+    }
+  });
+
+  // Particle system
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W = canvas.width = innerWidth;
+  let H = canvas.height = innerHeight;
+  window.addEventListener('resize', ()=>{ W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+
+  // create particles
+  const PARTICLES = [];
+  const COUNT = Math.min(120, Math.floor((W*H)/6000)); // scale by screen
+  for(let i=0;i<COUNT;i++){
+    PARTICLES.push({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.6,
+      vy: (Math.random()-0.5)*0.6,
+      r: 0.8 + Math.random()*2.6,
+      hue: 200 + Math.random()*140
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // subtle backdrop
+    for(let p of PARTICLES){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0) p.x = W;
+      if(p.x>W) p.x = 0;
+      if(p.y<0) p.y = H;
+      if(p.y>H) p.y = 0;
+
+      // glow
+      const g = ctx.createRadialGradient(p.x,p.y,p.r*0.2,p.x,p.y,p.r*6);
+      g.addColorStop(0, `hsla(${p.hue},85%,65%,0.12)`);
+      g.addColorStop(0.4, `hsla(${p.hue},85%,60%,0.06)`);
+      g.addColorStop(1, `rgba(0,0,0,0)`);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*3,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    // connect lines
+    for(let i=0;i<PARTICLES.length;i++){
+      for(let j=i+1;j<PARTICLES.length;j++){
+        const a = PARTICLES[i], b = PARTICLES[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const d = Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.strokeStyle = `rgba(255,255,255,${0.03 + (0.12*(1 - d/120))})`;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // small accessibility: keyboard open modal with H key
+  window.addEventListener('keydown',(e)=>{
+    if(e.key.toLowerCase() === 'h'){
+      modalBg.style.display = 'flex';
+      modalBg.setAttribute('aria-hidden','false');
+    }
+  });
+</script>
 </body>
 </html>
 
